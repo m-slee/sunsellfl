@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% load socialaccount %} 
+{% load static %}
+
+{% block title %} Delete Listing {% endblock %} 
+{% block content %}
+<div class="side-margin d-flex flex-col align-center py-1 listing-form-container">
+        <h3 class="py-1">Are you sure you want to delete this listing? </h3>
+        <a href="{% url 'marketplace:account_listings' %}">
+            <button class="btn btn-primary-border">Cancel</button>
+        </a>
+    <form class="create-form d-flex justify-center flex-col" method="post">
+        {% csrf_token %}
+        <p class="py-1">This action cannot be undone. Your listing will no longer be publicly visible and you will no longer be able to read or receive replies on it.</p>
+        <button class="btn btn-danger fw-bold" type="submit">Delete Listing</button>
+    </form>
+</div>
+{% endblock %}

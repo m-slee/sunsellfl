@@ -1,0 +1,181 @@
+{% extends 'base.html' %} {% load socialaccount %} 
+{% load static %}
+{% load cloudinary %}
+
+{% block title %} Listings - Browse Items for Sale {% endblock %} 
+{% block content %}
+<div class="side-margin">
+    <div class="search-options">
+            <form 
+                action="{% url 'marketplace:listings' selected_category %}" 
+                method="get" 
+                class="search-input postion-relative"
+            >
+                <input 
+                    type="text"
+                    name="search"
+                    placeholder="search for an item."
+                    value="{{ search|default:'' }}"
+                />
+                <button type="submit" class="search-button">
+                    <img  class="search-icon" src="{% static 'images/search_icon.svg' %}" alt="search">
+                </button>
+            </form>
+        <div class="search-selects d-flex flex-wrap px-1">
+            <select name="category" id="categories">
+                <option value="">View All</option>
+                {% for slug, category in categories %}
+                    <option 
+                        value="{{ slug }}"
+                        {% if slug == selected_category %} selected {% endif %}
+                    >
+                        {{ category }}
+                    </option>
+                {% endfor %}
+            </select>
+            <select name="date-order" id="date-order">
+                <option 
+                    value="newest"
+                    {% if date_order == 'newest' %} selected {% endif %}
+                >
+                    Newest
+                </option>
+                <option 
+                    value="oldest"
+                    {% if date_order == 'oldest' %} selected {% endif %}
+                >
+                    Oldest
+                </option>
+            </select>
+            <select name="listing-type" id="listing-type">
+                <!-- should pass these in dynamically -->
+                <option selected value="for_sale">For Sale</option>
+            </select>
+            <select name="price" id="price">
+                {% for price_range in price_ranges %}
+                    <option 
+                    {% if price_range == price %} selected {% endif %}
+                    value="{{ price_range }}">$ {{ price_range }}</option>
+                {% endfor %}
+            </select>
+            <select name="city" id="city">
+                {% for city_option in cities %}
+                    <option 
+                    {% if city == city_option %} selected {% endif %}
+                    value="{{ city_option }}">{{ city_option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="my-1 d-flex justify-between align-center">
+        <div class="d-flex align-center">
+            <img class="mr-half" src="{% static 'images/for_sale_icon.svg' %}" alt="for sale">
+            <h3>
+                For Sale  
+                {% if search %}
+                    <a href="{% url 'marketplace:listings' %}">
+                        <span class="ml-1 cursor-pointer search-pill">
+                            {{ search }} <img src="{% static 'images/close_icon.svg' %}" alt="close">
+                        </span>
+                    </a>
+                {% endif %}
+            </h3>
+        </div>
+        <div>
+           {{ page_obj.paginator.count }} results found
+        </div>
+    </div>
+    <div class="my-1 listings-grid">
+        {% for listing in listings %}
+            <a href="{% url 'marketplace:listing_detail' listing.id %}">
+                <div class="listing-card">
+                    <div class="listing-image-container">
+                        {% if listing.images.all|length > 0 %}
+                            {% cloudinary listing.images.all.0.image.url width=300 height=300 crop="thumb" gravity="auto" quality="auto" fetch_format="auto" %}
+                            <!-- <img src="{{ listing.images.all.0.image.url }}" alt="listing image"> -->
+                        {% else %}
+                            <img src="{% static 'images/default.jpg' %}" alt="listing-iamge">
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-between pt-1">
+                        <h2>{{ listing.title }}</h2>
+                        <div class="price">
+                            <h3 class="text-green">${{ listing.price|floatformat:2 }}</h3>
+                        </div>  
+                    </div>
+                    <div class="d-flex justify-between">
+                        <p class="pt-1 text-light">{{ listing.city }}, FL</p>
+                        <p class="pt-1 text-light">{{ listing.date_posted|date:"M d, Y" }}</p>
+                    </div>
+                    <div class="mt-1">
+                        <p class="category-pill">{{ listing.subcategory }}</p>
+                    </div>
+                </div>
+            </a>
+        {% empty %}
+            <p>No listings found.</p>
+        {% endfor %}
+    </div>
+    
+    {% if page_obj.paginator.count > 0 %}
+        <div class="pagination py-1 mb-1">
+            {% if page_obj.has_previous %}
+                <a class="mr-1" href="{% querystring page=page_obj.previous_page_number %}">&laquo;</a>
+            {% endif %}
+
+            {% for page_number in page_obj.paginator.get_elided_page_range %}
+                {% if page_number == page_obj.paginator.ELLIPSIS %}
+                    {{page_number}}
+                {% else %}
+                    <a
+                        href="{% querystring page=page_number %}"
+                        class="page {% if page_number == page_obj.number %}page-current{% endif %}"
+                    >
+                        {{page_number}}
+                    </a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="{% querystring page=page_obj.next_page_number %}">&raquo;</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    console.log("Listings page loaded");
+    const categorySelect = document.getElementById('categories');
+    const dateOrderSelect = document.getElementById('date-order');
+    const priceSelect = document.getElementById('price');
+    const citySelect = document.getElementById('city');
+
+    categorySelect.addEventListener('change', function() {
+        const selectedCategory = this.value;
+        console.log("Selected category:", selectedCategory);
+        // You can add code here to filter listings based on the selected category
+        window.location.href = `{% url 'marketplace:listings' %}${selectedCategory ? selectedCategory + '/' : ''}`;
+    });
+
+    dateOrderSelect.addEventListener('change', function() {
+        const selectedOrder = this.value;
+        console.log("Selected date order:", selectedOrder);
+        window.location.href = window.location.pathname + '?search={{ search }}&city={{ city }}&date_order=' + selectedOrder;
+    });
+
+    priceSelect.addEventListener('change', function() {
+        const selectedPrice = this.value;
+        console.log("Selected price:", selectedPrice);
+        // window.location.href = window.location.pathname + '?price=' + selectedPrice;
+        window.location.href = window.location.pathname + '?search={{ search}}&date_order={{ date_order}}&city={{ city }}&price=' + selectedPrice;
+    });
+
+    citySelect.addEventListener('change', function() {
+        const selectedCity = this.value;
+        console.log("Selected city:", selectedCity);
+        window.location.href = window.location.pathname + '?search={{ search}}&date_order={{ date_order}}&price={{ price }}&city=' + selectedCity;
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% load socialaccount %} 
+
+{% block title %} About - Our Brand {% endblock %} 
+{% block content %}
+<div class="d-flex flex-col justify-center align-center about-hero-container">
+    <div class="about-hero d-flex flex-col justify-center align-center">
+        <p class="mb-1 mt-1">
+            SunSellFL
+        </p>
+        <h1 class="mb-1">
+        About Us
+        </h1>
+    </div>
+</div>
+<div class="side-margin py-1 mt-1">
+    <h1 class="mb-1">FAQs</h1>
+    <div class="faq mb-1">
+        <h2 class="mb-1">What is SunSellFL.com?</h2>
+        <p class="hero-p">SunSellFL.com is a local online platform connecting buyers and sellers across Florida. Whether you're looking for fresh produce from a Central Florida farm, beach gear in the Panhandle, or services in South Florida, everything is focused on local Florida listings, local pickup options, and community-driven transactions.</p>
+    </div>
+    <div class="faq mb-1">
+        <h2 class="mb-1">How much does it cost to use the site?</h2>
+        <p class="hero-p">New users get 5 free listings to post whatever they want. After the 5 free listins are used, a $5 is charged to post a listing.</p>
+    </div>
+    <div class="faq mb-1">
+        <h2 class="mb-1">How do I create an account?</h2>
+        <p class="hero-p">Click the "Sign up" link in the top navigation and enter the relevant information. Additionally, you can sign in with an existing Google account.</p>
+    </div>
+    <div class="faq mb-1">
+        <h2 class="mb-1">How do I create a listing?</h2>
+        <p class="hero-p">Click the "Post Listing" button in the top navigation and enter the required information and upload up to 3 images. If you have any free listings left, you can post your listing immediately. Otherwise, continue to the payment form and enter the required information. Once the payment is successful, your listing will be active.</p>
+    </div>
+    <div class="faq mb-1">
+        <h2 class="mb-1">Can I edit my listing once it active?</h2>
+        <p class="hero-p">Yes, you can edit the information in your listing by going to "Account", then clicking the "Edit Listing" button on the relevant listing.</p>
+    </div>
+    <div class="faq mb-1">
+        <h2 class="mb-1">How long do listings stay active for?</h2>
+        <p class="hero-p">Listings are active for 30 days and are automatically deleted after they've expired. You can delete you listing before the 30 days are up, by gonig to "Account", clicking "Edit Listing", and then the "Delete Listing" button. Once the listing is deleted it cannot be undone and a refund will not be issued.</p>
+    </div>
+    <div class="faq mb-1">
+        <h2 class="mb-1">Do you offer refunds for listing fees?</h2>
+        <p class="hero-p">We do not offer refunds for listing fees once the listing is active.</p>
+    </div>
+    <div class="faq mb-1">
+        <h2 class="mb-1">Are there any prohibited items?</h2>
+        <p class="hero-p">Yes. We do not allow firearms, alcohol, tobacco, live animals, illegal substances, or anything that violates Florida or federal law. Full prohibited items list is in our Terms of Service.</p>
+    </div>
+</div>
+<div class="sub-hero side-margin ">
+    <div class="text-center mb-1">
+        <h2 class="hero-heading mb-1">SunSellFL is Florida's Premiere Marketplace</h2>
+        <p class="hero-p mb-1">
+            SunSellFL is connecting Florida residents by helping them earn money and find great deals. Find what you're looking for at some of the best prices the state of Florida has to offer.
+        </p>
+        <a class="mt-1" href="{% url 'marketplace:listings'  %}">
+            <button class="btn btn-primary fw-bold hero-p">Browse Now</button>
+        </a>
+    </div>
+</div>
+{% include "marketplace/includes/footer.html" %} 
+{% endblock %}

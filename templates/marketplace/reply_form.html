@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% load socialaccount %} 
+{% load static %}
+
+{% block title %} Reply - Send the Seller a Message {% endblock %} 
+{% block content %}
+<div class="side-margin d-flex flex-col align-center py-1">
+    <form class="w-100" method="post">
+        {% csrf_token %}
+        <div class="border-bottom pb-1">
+            <div class="d-flex">
+                <h1 class="mr-1">{{ listing.title }}</h1>
+                <div class="price ml-1">
+                    <h1 class="text-green">${{ listing.price|floatformat:2 }}</h1>
+                </div>  
+            </div>
+            <p class="pt-1 text-light">
+                {{ listing.city }}, FL
+            </p>
+        </div>
+        <div class="form-group d-flex flex-col py-1">
+            <label for="id_message">Write your message to the seller</label>
+            <textarea class="form-input mt-1 p-1" 
+            placeholder="write your message here..."
+            name="message" cols="40" rows="10" required="" id="id_message"></textarea>
+        </div>
+        <button class="btn btn-primary fw-bold" type="submit">Send Message</button>
+    </form>
+</div>
+{% endblock %}

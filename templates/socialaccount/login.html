@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+{% load socialaccount %} 
+{% load static %}
+{% block title %} Sign in with Goolge {% endblock %} 
+{% block content %}
+    <div class="side-margin d-flex flex-col align-center py-1 listing-form-container">
+        <h1 class="mt-1">Sign In Via Google</h1>
+        <p class="mt-1">You are about to sign in using a third-party account from Google.</p>
+        <form class="py-1" method="post">
+            {% csrf_token %}
+            <button class="btn btn-primary fw-bold" type="submit">Continue</button>
+        </form>
+    </div>
+{% endblock %}
+
+
+        
+        
+        
+    

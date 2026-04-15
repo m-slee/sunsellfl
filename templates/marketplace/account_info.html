@@ -1,0 +1,24 @@
+{% extends 'marketplace/account_base.html' %} {% load socialaccount %} 
+{% load static %}
+
+{% block title %} Account Info {% endblock %} 
+{% block account_content %}
+    <div class="my-1">
+        <h2>Account Info</h2>
+        <div class="account-info ">
+            <div class="d-flex">
+                <div class="mr-2">
+                    <p class="mb-1">email</p>
+                    <h4>{{ user.email }}</h4>
+                </div>
+                <div>
+                    <p class="mb-1">free posts left</p>
+                    <h4>{{ user.free_posts_remaining }}</h4>
+                </div>
+            </div>
+        </div>
+        <a href="/accounts/password/reset/">
+            <button class="btn btn-green fw-bold mt-2">Request Password Reset</button>
+        </a>
+    </div>
+{% endblock %}

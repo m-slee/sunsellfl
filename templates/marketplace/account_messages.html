@@ -1,0 +1,82 @@
+{% extends 'marketplace/account_base.html' %} {% load socialaccount %} 
+{% load static %}
+
+{% block title %} Account Messages {% endblock %} 
+{% block account_content %}
+    <div class="my-1 pb-1">
+        <h2 class="pb-1">Your Messages</h2>
+        <div class="d-flex">
+            <a class="mr-half" href="{% url 'marketplace:account_messages' %}">
+                <button 
+                    class="btn {% if message_tab != 'sent' %} btn-primary fw-bold {% else %} btn-secondary {% endif %}">
+                    Inbox
+                </button>
+            </a>
+            <a href="{% url 'marketplace:account_messages' %}?filter=sent">
+                <button 
+                    class="btn {% if message_tab == 'sent' %} btn-primary fw-bold {% else %} btn-secondary {% endif %}">
+                    Sent
+                </button>
+            </a>
+        </div>
+        <div class="my-1">
+            <div class="mt-2">
+                {% for reply in page_obj %}
+                    {% if user.id == reply.sender.id %}
+                        <a class="cursor-pointer" href="{% url 'marketplace:conversation_detail' reply.listing.id reply.recipient.id %}?reply_id={{ reply.id }}">
+                            <div class="px-1 reply d-flex justify-between border-bottom py-1">
+                                {% if reply.was_read_by_sender %}
+                                    <p class="text-muted mr-1">{{ reply.sender.email }}</p>
+                                    <p class="text-muted text-truncate">{{ reply.message }}</p>
+                                {% else %}
+                                    <p class="fw-bold mr-1">{{ reply.sender.email }}</p>
+                                    <p class="fw-bold text-truncate">{{ reply.message }}</p>
+                                {% endif %}
+                                <div></div>
+                            </div>
+                        </a>
+                    {% else %} 
+                        <a class="cursor-pointer" href="{% url 'marketplace:conversation_detail' reply.listing.id reply.sender.id %}?reply_id={{ reply.id }}">
+                            <div class="px-1 reply d-flex justify-between border-bottom py-1">
+                                {% if reply.was_read_by_recipient %}
+                                    <p class="text-muted mr-2">{{ reply.sender.email }}</p>
+                                    <p class="text-muted text-truncate">{{ reply.message }}</p>
+                                {% else %}
+                                    <p class="fw-bold mr-2">{{ reply.sender.email }}</p>
+                                    <p class="fw-bold text-truncate">{{ reply.message }}</p>
+                                {% endif %}
+                                <div></div>
+                            </div>
+                        </a>
+                    {% endif %} 
+                {% empty %}
+                    <p>No messages yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% if page_obj.paginator.count > 0 %}
+            <div class="pagination py-1">
+                {% if page_obj.has_previous %}
+                    <a class="mr-1" href="{% querystring page=page_obj.previous_page_number %}">&laquo;</a>
+                {% endif %}
+
+                {% for page_number in page_obj.paginator.get_elided_page_range %}
+                    {% if page_number == page_obj.paginator.ELLIPSIS %}
+                        {{page_number}}
+                    {% else %}
+                        <a
+                            href="{% querystring page=page_number %}"
+                            class="page {% if page_number == page_obj.number %}page-current{% endif %}"
+                        >
+                            {{page_number}}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a href="{% querystring page=page_obj.next_page_number %}">&raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'marketplace/account_base.html' %} {% load socialaccount %} 
+{% load static %}
+
+{% block title %} Replies {% endblock %} 
+{% block account_content %}
+    <div class="my-1">
+        <div class="d-flex align-center">
+        <h2>Replies for {{ listing.title }}</h2>
+            <div class="price ml-1">
+                <h3 class="text-green">${{ listing.price|floatformat:2 }}</h3>
+            </div>  
+        </div>
+        <div class="mt-2">
+            {% for reply in replies %}
+                <a class="cursor-pointer" href="{% url 'marketplace:conversation_detail' reply.listing.id reply.sender.id %}?reply_id={{ reply.id }}">
+                    <div class="px-1 reply d-flex justify-between border-bottom py-1">
+                        {% if user == reply.sender and reply.was_read_by_sender or user == reply.recipient and reply.was_read_by_recipient %}
+                            <p class="text-muted mr-1">{{ reply.sender.email }}</p>
+                            <p class="text-muted text-truncate">{{ reply.message }}</p>
+                        {% else %}
+                            <p class="fw-bold mr-1">{{ reply.sender.email }}</p>
+                            <p class="fw-bold text-truncate">{{ reply.message }}</p>
+                        {% endif %}
+                        <div></div>
+                    </div>
+                </a>
+            {% empty %}
+                <p>No replies for this listing yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

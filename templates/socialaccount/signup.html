@@ -1,0 +1,21 @@
+{% extends 'base.html' %} 
+{% load socialaccount %} 
+{% load static %}
+{% block title %} Sign Up with Goolge {% endblock %} 
+{% block content %}
+    <div class="side-margin d-flex flex-col align-center py-1 listing-form-container">
+        <h1 class="mt-1">Sign Up</h1>
+        <p class="mt-1">You are about to use your Google account to login to
+        SunSellFL.com. As a final step, please complete the following form:
+        </p>
+        <form class="auth-form d-flex justify-center flex-col" method="post" action="/accounts/3rdparty/signup/">
+            {% csrf_token %}
+            <div class="form-group d-flex flex-col py-1">
+                <label for="id_email">Email</label>
+                <input class="form-input p-1 mt-1 w-100" type="email" name="email" value="msleetechnology@gmail.com" autocomplete="email" placeholder="Email address" maxlength="320" required="" id="id_email">
+            </div>
+            <button class="btn btn-primary fw-bold" type="submit">Sign Up</button>
+        </form>
+    </div>
+{% endblock %}
+    

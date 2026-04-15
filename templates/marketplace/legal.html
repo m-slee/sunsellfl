@@ -1,0 +1,161 @@
+{% extends 'base.html' %} {% load socialaccount %} 
+
+{% block title %} Legal - Terms of Service {% endblock %} 
+{% block extra_styles %} 
+    <style>
+        p, h1, h2, h3 {
+            margin: 1rem 0;
+        }
+        /* h1, h2, h3 {
+            color: #1a3c6e;
+        } */
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+        .last-updated {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        section {
+            margin-bottom: 50px;
+        }
+        h2 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .toc {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+        .toc a {
+            color: #1a3c6e;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .disclaimer {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 50px;
+            font-size: 0.95rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 0.9rem;
+        }
+</style>
+{% endblock %}
+{% block content %}
+<div class="side-margin d-flex flex-col py-1 ">
+    <h1>Legal Information</h1>
+    <p class="last-updated"><strong>Last Updated: April 14, 2026</strong></p>
+
+    <div class="toc">
+        <h3>Quick Navigation</h3>
+        <ul>
+            <li><a href="#terms">Terms of Service</a></li>
+            <li><a href="#prohibited">Prohibited Items</a></li>
+            <li><a href="#dispute">Dispute Resolution & Safety Guidelines</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </div>
+
+    <section id="terms">
+        <h2>Terms of Service</h2>
+
+        <h3>1. Acceptance of Terms</h3>
+        <p>These Terms of Service (“Terms”) constitute a legally binding agreement between you and SunSellFL, operated by SunSellFL.com (“Company”), a Florida-based entity.</p>
+        <p>By creating an account, posting a listing, messaging users, or otherwise accessing or using the Platform, you acknowledge that you have read, understood, and agree to be bound by these Terms, our Privacy Policy, and any additional policies referenced herein.</p>
+
+        <h3>2. Description of the Platform</h3>
+        <p>SunSellFL is a local online platform that connects buyers and sellers located in the State of Florida. We provide a venue for users to post listings for goods and services, communicate with each other, and arrange transactions (primarily local pickup, with optional shipping).</p>
+        <p><strong>Important:</strong> We are <strong>not</strong> a party to any transaction between buyers and sellers. We do not buy, sell, store, ship, or guarantee any items. All transactions occur directly between users.</p>
+
+        <h3>3. User Eligibility and Accounts</h3>
+        <p>You must be at least 18 years old and a resident of Florida to use the Platform. You agree to provide accurate information and to verify your phone number.</p>
+
+        <h3>4. User Conduct and Prohibited Activities</h3>
+        <p>You agree to use the Platform only for lawful purposes and must not engage in scams, spam, harassment, or post false or misleading content.</p>
+
+        <h3>5. Listings, Sales, and Transactions</h3>
+        <p>Sellers are solely responsible for the accuracy of listings and compliance with all applicable laws, including Florida sales tax obligations. Buyers are responsible for inspecting items before completing transactions.</p>
+
+        <h3>6. Fees and Payments</h3>
+        <p>Basic use of the Platform is free. Optional premium features may incur fees, which are non-refundable unless otherwise stated.</p>
+
+        <h3>7. Intellectual Property</h3>
+        <p>All Platform content is owned by or licensed to SunSellFL. You grant us a license to use your listings for promotional purposes.</p>
+
+        <h3>8. Disclaimers and Limitation of Liability</h3>
+        <p>THE PLATFORM IS PROVIDED “AS IS” WITHOUT WARRANTIES. TO THE MAXIMUM EXTENT PERMITTED BY LAW, SunSellFL SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES.</p>
+
+        <h3>9. Indemnification</h3>
+        <p>You agree to indemnify SunSellFLL against any claims arising from your use of the Platform or your transactions.</p>
+
+        <h3>10. Termination</h3>
+        <p>We may terminate or suspend your account at any time for violations of these Terms.</p>
+
+        <h3>11. Governing Law and Dispute Resolution</h3>
+        <p>These Terms are governed by the laws of the State of Florida. Any disputes shall be resolved exclusively in the state or federal courts located in Pinellas County, Florida.</p>
+
+        <h3>12. Miscellaneous</h3>
+        <p>These Terms constitute the entire agreement between you and us.</p>
+    </section>
+
+    <section id="prohibited">
+        <h2>Prohibited Items</h2>
+        <p>The following items are strictly prohibited on SunSellFL</p>
+        <ul>
+            <li>Firearms, ammunition, and weapons</li>
+            <li>Alcohol, tobacco, and vaping products</li>
+            <li>Live animals and illegal substances</li>
+            <li>Stolen goods or counterfeit items</li>
+            <li>Anything that violates Florida or federal law</li>
+        </ul>
+        <p>Violations may result in immediate account termination and reporting to authorities.</p>
+    </section>
+
+    <section id="dispute">
+        <h2>Dispute Resolution & Safety Guidelines</h2>
+        <ul>
+            <li>Always communicate through the Platform.</li>
+            <li>For local meetups: Choose well-lit public places (e.g., police station parking lots).</li>
+            <li>If an item is not as described, attempt to resolve with the other party first. Open a dispute via the Platform within 48 hours if needed.</li>
+            <li>Report suspicious activity or scams immediately using the Contact form.</li>
+        </ul>
+        <p>We will investigate reports and may suspend users or involve law enforcement when appropriate.</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>For questions about these Terms or legal matters, please contact:</p>
+        <p><strong>SunSellFL.com</strong><br>
+        Email: <a href="mailto:support@sunsellfl.com">support@sunsellfl.com</a><br>
+    </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %} {% load socialaccount %} 
+{% load static %}
+
+{% block title %} Create Listing - Add an Item to Sell {% endblock %} 
+{% block content %}
+<div class="side-margin d-flex flex-col align-center py-1 listing-form-container">
+    <div class="d-flex align-center ">
+        <img class="mr-half" src="{% static 'images/for_sale_icon.svg' %}" alt="for sale">
+        <h3>
+            Create a Listing
+        </h3>
+    </div>
+    <form class="create-form d-flex justify-center flex-col" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div class="form-group d-flex flex-col py-1">
+            <label for="id_title">Title</label>
+            <input {% if form.title.value %} value="{{ form.title.value }}" {% endif %} class="form-input p-1 mt-1" placeholder="post title..." required="" type="text" name="title" maxlength="128"  id="id_title">
+            {% if form.title.errors %}
+                <div class="error-messages ml-1 mt-half text-red">
+                    {{ form.title.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group d-flex flex-col py-1">
+            <label for="id_description">Description</label>
+            <textarea class="form-input mt-1 p-1" 
+                required=""
+                placeholder="describe what you are selling..."
+                name="description" cols="40" rows="10"  id="id_description">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+                {% if form.description.errors %}
+                    <div class="error-messages ml-1 mt-half text-red">
+                        {{ form.description.errors }}
+                    </div>
+                {% endif %}
+        </div>
+        <input type="hidden" name="category" value="fs">
+        <!-- <div class="form-group d-flex flex-col py-1">
+            <label for="id_category">Category</label>
+            <select class="mt-1 form-select" name="category" id="id_category">
+                <option value="fs" selected="">For Sale</option>
+                <option value="srv">Services</option>
+                <option value="gig">Gigs</option>
+                <option value="job">Jobs</option>
+            </select>
+        </div>   -->
+        <div class="form-group d-flex flex-col py-1">
+            <label for="id_subcategory">Category</label>
+            <select class="mt-1 form-select" name="subcategory" id="id_subcategory">
+                {% for slug, subcategory in subcategories %}
+                    <option 
+                        value="{{ slug }}"
+                        {% if form.subcategory.value and form.subcategory.value == slug %} selected {% endif %}
+                    >
+                        {{ subcategory }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>  
+        <div class="form-group d-flex flex-col py-1">
+            <label for="id_price">Price</label>
+            <input 
+                {% if form.price.value %} value="{{ form.price.value }}" {% else %} value="10.00" {% endif %}
+                class="form-input p-1 mt-1" type="number" name="price" required="" step="any"  id="id_price">
+                {% if form.price.errors %}
+                    <div class="error-messages ml-1 mt-half text-red">
+                        {{ form.price.errors }}
+                    </div>
+                {% endif %}
+        </div>
+        <div class="form-group d-flex flex-col py-1">
+            <label for="city-select">City</label>
+            <select class="mt-1 form-select" name="city" id="city-select">
+                {% for city in cities %}
+                    <option 
+                        value="{{ city }}"
+                        {% if form.city.value and form.city.value == city %} selected {% endif %}
+                    >
+                        {{ city }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group d-flex flex-col py-1">
+            <label for="id_phone">Phone</label>
+            <input 
+                {% if form.phone.value %} value="{{ form.phone.value }}" {% endif %}
+                class="form-input p-1 mt-1" type="text" name="phone" maxlength="254" id="id_phone">
+            <p class="mt-half">Note: This is optional and will be publicly visible if you include it.</p>
+        </div>
+        <div class="form-group d-flex flex-col py-1">
+            <label for="id_email">Email</label>
+            <input 
+                {% if form.email.value %} value="{{ form.email.value }}" {% endif %}
+                class="form-input p-1 mt-1" type="email" name="email" maxlength="254" id="id_email">
+            <p class="mt-half">Note: This is optional and will be publicly visible if you include it.</p>
+        </div>
+        <div class="form-group d-flex flex-col py-1">
+            <h2>Images</h2>
+            <p class="mt-half">Image are not required but recommended. Add between 0 and 3 images of your item.</p>
+        </div>
+        <div class="d-flex flex-wrap">
+            <div class="form-group d-flex flex-col py-1">
+                <label for="id_image">Image 1</label>
+                <input  class="mt-1 mb-1" type="file" name="image" accept="image/*" id="id_image">
+                <img class="image-preview" width="250" height="auto" >
+            </div>
+            <div class="form-group d-flex flex-col py-1">
+                <label for="id_image">Image 2</label>
+                <input class="mt-1 mb-1" type="file" name="image" accept="image/*" id="id_image">
+                <img class="image-preview" width="250" height="auto" >
+            </div>
+            <div class="form-group d-flex flex-col py-1">
+                <label for="id_image">Image 3</label>
+                <input class="mt-1 mb-1" type="file" name="image" accept="image/*" id="id_image">
+                <img class="image-preview" width="250" height="auto" >
+            </div>
+        </div>
+        <button class="btn btn-primary fw-bold" type="submit">
+            {% if user.is_authenticated and user.free_posts_remaining > 0 %}
+                Create Listing
+            {% else %}
+                Proceed to Checkout
+            {% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'scripts/imagePreview.js' %}"></script>
+{% endblock %}

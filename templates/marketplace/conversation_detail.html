@@ -1,0 +1,40 @@
+{% extends 'marketplace/account_base.html' %} {% load socialaccount %} 
+{% load static %}
+
+{% block title %} Account - Conversation {% endblock %} 
+{% block account_content %}
+<div class="my-1">
+    <div class="d-flex align-center">
+    <h2>Messages for {{ listing.title }}</h2>
+        <div class="price ml-1">
+            <h3 class="text-green">${{ listing.price|floatformat:2 }}</h3>
+        </div>  
+    </div>
+    <!-- reply form -->
+    <div class="d-flex flex-col align-center py-1">
+        <form class="w-100" method="post" action="{% url 'marketplace:conversation_reply' listing.id sender_id %}">
+            {% csrf_token %}
+            <div class="form-group d-flex flex-col py-1">
+                <textarea class="form-input mt-1 p-1" 
+                placeholder="write your message here to respond..."
+                name="message"  required="" id="id_message"></textarea>
+            </div>
+            <button class="btn btn-primary fw-bold" type="submit">Send Message</button>
+        </form>
+    </div>
+    <!-- end reply form -->
+    <div class="mt-2">
+        {% for response in replies %}
+        <div class="my-1">
+            <h4>{{ response.sender.email }}</h4>
+            <p class="text-muted mb-half">{{ response.date_sent }}</p>
+            <div class="p-2 reply d-flex justify-between border-bottom">
+                <p>{{ response.message }}</p>
+            </div>
+        </div>
+        {% empty %}
+            <p>No messages for this listing yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

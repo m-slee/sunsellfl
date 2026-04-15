@@ -1,0 +1,93 @@
+{% extends 'base.html' %} {% load socialaccount %} 
+{% load static %}
+{% load cloudinary %}
+
+{% block title %} Listing Detail {% endblock %} 
+{% block content %}
+<div class="side-margin py-1">
+    <div class="d-flex align-center">
+        <img class="mr-half" src="{% static 'images/for_sale_icon.svg' %}" alt="for sale">
+        <h3>
+            For Sale
+        </h3>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="notification notification-{{ message.tags }} p-2 my-1">
+                <div class="d-flex justify-between">
+                    <h1 class="text-white">{{ message.tags|capfirst }}</h1>
+                    <h2 class="cursor-pointer text-white notification-close">X</h2>
+                </div>
+                <p class="text-white mt-1">{{ message }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="listing-detail py-1">
+        <div class="listing-image">
+            <!-- <img class="listing-img" src="{{ listing.image.url }}" alt="listing image"> -->
+            <div class="listing-image-detail">
+                {% if listing.images.all|length > 0 %}
+                    <img class="listing-img" src="{{ listing.images.all.0.image.url }}" alt="listing image">
+                {% else %}
+                    <img class="listing-img" src="{% static 'images/default.jpg' %}" alt="listing-iamge">
+                {% endif %}
+            </div>
+            <div class="d-flex">
+                {% for listing_image in listing.images.all %}
+                    <img width="auto" height="100" class="mr-1 cursor-pointer listing-img-preview" src="{{ listing_image.image.url }}" alt="listing image preview">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="listing-details pl-1">
+            <div class="border-bottom pb-1">
+                <div class="d-flex">
+                    <h1 class="mr-1">{{ listing.title }}</h1>
+                    <div class="price ml-1">
+                        <h1 class="text-green">${{ listing.price|floatformat:2 }}</h1>
+                    </div>  
+                </div>
+                <p class="pt-1 text-light">
+                    {{ listing.city }}, FL
+                </p>
+            </div>
+            <p class="pt-1">{{ listing.description }}</p>
+            <div class="pt-1">
+                <a href="{% url 'marketplace:reply_create' listing.id %}">
+                    <button class="btn btn-primary fw-bold mt-1">Contact Seller</button>
+                </a>
+                <p class="text-light pt-half">Send the seller a message using our internal messaging system to let them know you're interested. Discuss and negotiate how and where you will buy this.
+                    Optionally, contact them by phone or email if provided.
+                </p>
+            </div>
+            {% if listing.phone %}
+                <div class="pt-1">
+                    <h3 class="mb-half">Phone</h3>
+                    <p>{{ listing.phone }}</p>
+                </div>
+            {% endif %}
+            {% if listing.email %}
+                <div class="pt-1">
+                    <h3 class="mb-half">Email</h3>
+                    <p>{{ listing.email }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'scripts/notification.js' %}"></script>
+    <script>
+        const listingImagePreviews = document.querySelectorAll(".listing-img-preview");
+        const listingImageDetail = document.querySelector(".listing-img");
+
+        [...listingImagePreviews].forEach((image) => {
+            image.addEventListener("click", () => {
+                console.log("image: " + image.src);
+                listingImageDetail.src = image.src;
+            });
+        });
+
+    </script>
+{% endblock %}

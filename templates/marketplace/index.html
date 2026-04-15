@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% load socialaccount %} 
+{% block title %} Home - Florida's Local Marketplace {% endblock %}
+{% block content %}
+<div class="d-flex flex-col justify-center align-center hero-container">
+    <div class="hero d-flex flex-col justify-center align-center">
+        <h1 class="mb-1">
+            Florida's Local Marketplace
+        </h1>
+        <p class="mb-1 mt-1">
+            SunSellFL is the only online marketplace exclusively for Floridians.
+            Discover the easiest way to find deals and sell items in the state of Florida. Join 
+            out vibrant community of Floridians trading locally. 
+        </p>
+        <a class="mt-1" href="{% url 'marketplace:listings'  %}">
+            <button class="btn btn-primary fw-bold">Browse Listings</button>
+        </a>
+    </div>
+</div>
+<div class="side-margin py-1">
+    <div class="categories-grid py-1">
+        {% for slug, category in categories %}
+        <a href="{% url 'marketplace:listings' slug %}">
+            <div class="category-link d-flex align-center justify-center p-1">
+                {{ category }}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+<div class="bg-grey">
+    <div class="sub-hero side-margin py-1">
+        <div class="text-center mb-1">
+            <h2 class="hero-heading mb-1">Earn Money by Selling</h2>
+            <p class="hero-p">
+                Quickly earn money by listing items you have for sale and let the buyers come to you.
+            </p>
+        </div>
+        <div class="hero-card-grid pt-1">
+            <div class="hero-card hero-card-green">
+                <h1 class="mb-1">1</h1>
+                <h2 class="mb-1">Create your Account</h2>
+                <p>
+                    Sign up for an account and immediately get started creating
+                    a listing for free. You'll be selling in no time.
+                </p>
+            </div>
+            <div class="hero-card hero-card-green">
+                <h1 class="mb-1">2</h1>
+                <h2 class="mb-1">List an Item</h2>
+                <p>
+                    Create a listing by adding the relevant details and adding
+                    images of your item. It's very simple and
+                    intuitive.
+                </p>
+            </div>
+            <div class="hero-card hero-card-green">
+                <h1 class="mb-1">3</h1>
+                <h2 class="mb-1">Sell your Item</h2>
+                <p>
+                    Interested buyers will contact you to negotiate a price
+                    and schedule a way to pick up and pay for your item. You're
+                    free to sell for however much you want and wherever you
+                    want.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="sub-hero side-margin py-1">
+        <div class="text-center mb-1">
+            <h2 class="hero-heading mb-1">Find the Items you want</h2>
+            <p class="hero-p">
+                Discover some of the best deals from some of the best people in Florida.
+            </p>
+        </div>
+        <div class="hero-card-grid pt-1">
+            <div class="hero-card">
+                <h1 class="mb-1">1</h1>
+                <h2 class="mb-1">Search for Items</h2>
+                <p>
+                    Browse available items for sale and find great deals.
+                </p>
+            </div>
+            <div class="hero-card">
+                <h1 class="mb-1">2</h1>
+                <h2 class="mb-1">Contact the Seller</h2>
+                <p>
+                    Contact the seller to negotiate a price and location to buy. You can use our internal
+                    messaging system or contact them via phone or email if the seller has provided contact info.
+                </p>
+            </div>
+            <div class="hero-card">
+                <h1 class="mb-1">3</h1>
+                <h2 class="mb-1">Buy the Item</h2>
+                <p>
+                    Pick up and pay for your item. It's just like other online marketplaces (but better).
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "marketplace/includes/footer.html" %} 
+{% endblock %}

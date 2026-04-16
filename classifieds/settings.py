@@ -40,6 +40,9 @@ else:
     ZOHO_ZEPTOMAIL_API_KEY_TOKEN = os.getenv("ZOHO_ZEPTOMAIL_API_KEY_TOKEN")
     ZOHO_ZEPTOMAIL_HOSTED_REGION = 'zeptomail.zoho.com' 
 
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

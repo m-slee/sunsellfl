@@ -173,6 +173,8 @@ def stripe_success(request):
 # webhook view
 @csrf_exempt
 def stripe_webhook(request):
+    if request.method == "GET":
+        return HttpResponse("Webhook endpoint is reachable!")
     print("Handling stipe webhook.")
     stripe.api_key = settings.STRIPE_SECRET_KEY
     payload = request.body

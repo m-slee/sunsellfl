@@ -173,15 +173,16 @@ def stripe_success(request):
 # webhook view
 @csrf_exempt
 def stripe_webhook(request):
+    print(f"stripe_webhook recieved request: {request.method}")
     if request.method == "GET":
         return HttpResponse("Webhook endpoint is reachable!")
     print("Handling stipe webhook.")
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    payload = request.body
+    # payload = request.body
     sig_header = request.META.get('HTTP_STRIPE_SIGNATURE', '')
 
     try:
-        event = stripe.Webhook.construct_event(payload, sig_header, settings.STRIPE_WEBHOOK_SECRET)
+        event = stripe.Webhook.construct_event(request.body, sig_header, settings.STRIPE_WEBHOOK_SECRET)
     except ValueError:
         return HttpResponseBadRequest("Invalid payload")
     except stripe.error.SignatureVerificationError:

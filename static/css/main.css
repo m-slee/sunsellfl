@@ -339,6 +339,7 @@ a {
     background: #e1ece0;
     padding: 0.3em;
     border-radius: 5px;
+    height: fit-content;
 }
 
 .listing-image-container {
@@ -347,7 +348,8 @@ a {
     width: 100%;
 }
 
-.listing-image-container img, .listing-image-detail img {
+.listing-image-container img,
+.listing-image-detail img {
     width: 100%; /* Image takes the full width of its container */
     height: 100%;
     object-fit: cover;
@@ -629,7 +631,8 @@ a {
         font-size: 2rem;
     }
 
-    .create-form, .auth-form {
+    .create-form,
+    .auth-form {
         width: 90%;
     }
 
